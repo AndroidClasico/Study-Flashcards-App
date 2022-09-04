@@ -6,6 +6,7 @@ import Home from "../Home";
 import DeckCreate from "../Decks/DeckCreate";
 import Header from "./Header";
 import NotFound from "./NotFound";
+import DeckView from "../Decks/DeckView";
 
 function Layout() {
   return (
@@ -16,6 +17,9 @@ function Layout() {
         <Switch>
           <Route path="/decks/new">
             <DeckCreate />
+          </Route>
+          <Route exact={true} path="/decks/:deckId">
+            <DeckView />
           </Route>
           <Route exact={true} path="/decks">
             <Redirect to="/" />

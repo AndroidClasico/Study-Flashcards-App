@@ -21,10 +21,9 @@ function DeckList() {
     function loadDecks() {
         listDecks().then(setDecks);
     };
-
     console.log("decks: ", decks);
 
-    const list = decks.map((deck) => (
+    const resultList = decks.map((deck) => (
         <li
             key={deck.id}
             className="list-group-item list-group-item-action flex-column align-items-start"
@@ -62,7 +61,7 @@ function DeckList() {
             <Link to="/decks/new" className="btn btn-secondary">
                 <span className="oi oi-plus" /> Create Deck
             </Link>
-            <ul className="list-group mt-2 deck-list">{list}</ul>
+            <ul className="list-group mt-2 deck-list">{resultList}</ul>
         </>
     )
 }
