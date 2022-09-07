@@ -82,7 +82,7 @@ function DeckView() {
                 <span className="oi oi-trash" />
             </button>
 
-            {/* cardlist */}
+            
             <CardList deck={deck} onCardDelete={handleDeleteCard}/>
         </main>
     );
