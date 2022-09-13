@@ -25,6 +25,7 @@ function CardForm({onSubmit, onDone, initailState, doneButtonLabel='Done', deckN
                     id='front'
                     name='front'
                     tabIndex='1'
+                    className="form-control"
                     required
                     onChange={changeHandler}
                     value={card.front}
@@ -36,6 +37,7 @@ function CardForm({onSubmit, onDone, initailState, doneButtonLabel='Done', deckN
                     id='back'
                     name='back'
                     tabIndex='2'
+                    className="form-control"
                     required
                     onChange={changeHandler}
                     value={card.back}

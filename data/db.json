@@ -6,8 +6,8 @@
       "id": 2
     },
     {
-      "name": "hi",
-      "description": "cards",
+      "name": "API calls",
+      "description": "learn to make API calls and CRUD functionality",
       "id": 3
     }
   ],
@@ -26,10 +26,10 @@
     },
     {
       "card": [],
-      "front": "new card",
-      "back": "yooooo",
-      "deckId": 2,
-      "id": 6
+      "front": "CRUD",
+      "back": "create, read, update, delete",
+      "deckId": 3,
+      "id": 7
     }
   ]
 }
