@@ -2,14 +2,19 @@ import React from "react";
 // import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import DeckForm from "./DeckForm";
-import { readDeck } from "../utils/api";
+import { readDeck, updateDeck } from "../utils/api";
 
 function DeckEdit() {
   const history = useHistory();
 
   function submitHandler(deck) {
-      readDeck(deck).then((savedDeck) =>
-      history.push(`/decks/${savedDeck.id}`)
+
+    //READ THE DECK
+    //UPDATE / SAVE THE DECKS NEW STATE
+
+    //event.preventDefault ???
+      readDeck(deck).then((updateDeck) =>
+      history.push(`/decks/${deck.id}`)
       );
   }
 
@@ -35,7 +40,7 @@ function DeckEdit() {
 
       <div>
         <h1>Edit Deck</h1>
-          <DeckForm onCancel={cancel} onSubmit={submitHandler}/>
+           <DeckForm onCancel={cancel} onSubmit={submitHandler} />
           
       </div>
     </>

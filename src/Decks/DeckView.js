@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { readDeck, deleteDeck, deleteCard } from "../utils/api";
 import CardList from "../Cards/CardList";
+import StudyDeck from "./Study/StudyDeck";
 //deck.name
 //deck.description
 ///edit study addCardsm delete
@@ -81,9 +82,8 @@ function DeckView() {
             >
                 <span className="oi oi-trash" />
             </button>
-
-            
             <CardList deck={deck} onCardDelete={handleDeleteCard}/>
+            
         </main>
     );
 }

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 function DeckForm({
-  ducky,
   onCancel,
   onSubmit,
   initialState = { name: "", description: "" },
