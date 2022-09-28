@@ -1,7 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import DeckForm from "./DeckForm";
+import { readDeck } from "../utils/api";
 
 function DeckEdit() {
+  const history = useHistory();
+
+  function submitHandler(deck) {
+      readDeck(deck).then((savedDeck) =>
+      history.push(`/decks/${savedDeck.id}`)
+      );
+  }
+
+  function cancel() {
+      history.goBack();
+  }
+
+
   return (
     <>
       <nav aria-label="breadcrumb">
@@ -19,20 +35,8 @@ function DeckEdit() {
 
       <div>
         <h1>Edit Deck</h1>
-        <form>
-          <label htmlFor="deck-name">
-            Name <hr></hr>
-            <input type="text" id="deck.id" name="deck-name" />
-          </label>
-          <hr></hr>
-          <label htmlFor="description">
-            Description <hr></hr>
-            <textarea type="text-box" id="description" name="description" />
-          </label>
-          <hr></hr>
-          <button>cancel</button>
-          <button>Submit</button>
-        </form>
+          <DeckForm onCancel={cancel} onSubmit={submitHandler}/>
+          
       </div>
     </>
   );
