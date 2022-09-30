@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 
-function DeckForm({
-  onCancel,
-  onSubmit,
-  initialState = { name: "", description: "" },
-}) {
+function DeckForm({ onCancel, onSubmit, initialState, deckName, deckDescription }) {
   const [deck, setdeck] = useState(initialState);
 
   function changeHandler({ target: { name, value } }) {
@@ -30,7 +26,7 @@ function DeckForm({
           onChange={changeHandler}
           value={deck.name}
           required
-          placeholder="deck name"
+          placeholder={deckName}
         />
         <label htmlFor="description">Description </label>
         <textarea
@@ -39,7 +35,7 @@ function DeckForm({
           onChange={changeHandler}
           value={deck.description}
           required
-          placeholder="deck description"
+          placeholder={deckDescription}
         />
         <button type="button" onClick={onCancel}>
           cancel

@@ -27,10 +27,8 @@ function StudyDeck() {
                 <span className="oi oi-home" /> Home
               </Link>
             </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              <Link to={`/decks/${deckId}/study`}>
-                <span className="oi oi-study" /> {deck.name}
-              </Link>
+            <li className="breadcrumb-item">
+              <Link to={`/decks/${deckId}`}>{deck.name}</Link>
             </li>
             <li className="breadcrumb-item">
             Study

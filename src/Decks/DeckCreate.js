@@ -5,6 +5,7 @@ import DeckForm from "./DeckForm";
 
 function DeckCreate() {
     const history = useHistory();
+    const initialState = { name: "", description: "" }
 
     function submitHandler(deck) {
         createDeck(deck).then((savedDeck) =>
@@ -32,7 +33,7 @@ function DeckCreate() {
             </nav>
             <h1>Create Deck</h1>
             
-            <DeckForm onCancel={cancel} onSubmit={submitHandler} />
+            <DeckForm initialState={initialState} onCancel={cancel} onSubmit={submitHandler} />
         </>
     );
 }

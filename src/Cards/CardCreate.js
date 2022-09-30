@@ -1,38 +1,55 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import CardForm from "./CardForm";
-import { readDeck, createCard } from "../utils/api"
-
+import { readDeck, createCard } from "../utils/api";
 
 function CardCreate() {
-    const [deck, setDeck] = useState({card: []})
-    const { deckId } = useParams()
-    const history = useHistory()
+  const [deck, setDeck] = useState({ card: [] });
+  const { deckId } = useParams();
+  const history = useHistory();
 
-    useEffect(() => {
-        readDeck(deckId).then(setDeck)
-    }, [deckId])
+  useEffect(() => {
+    readDeck(deckId).then(setDeck);
+  }, [deckId]);
 
-    function submitHandler(card) {
-        createCard(deckId, card)
-    }
+  function submitHandler(card) {
+    createCard(deckId, card);
+  }
 
-    function doneHandler() {
-        history.push(`/decks/${deckId}`)
-    }
+  function doneHandler() {
+    history.push(`/decks/${deckId}`);
+  }
 
-    return (
+  return (
+    <>
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">
+              <Link to="/">
+                <span className="oi oi-home" /> Home
+              </Link>
+            </li>
+            <li className="breadcrumb-item">
+              <Link to={`/decks/${deckId}`}>{deck.name}</Link>
+            </li>
+            <li className="breadcrumb-item active" aria-current="page">
+              Add Card 
+            </li>
+          </ol>
+        </nav>
         <div>
-        <h1>{deck.name} : Add Card</h1>
-        <CardForm 
+          <h1>{deck.name} : Add Card</h1>
+          <CardForm
             deckName={deck.name}
             onSubmit={submitHandler}
             onDone={doneHandler}
             initailState={deck}
-
-        />
+          />
         </div>
-    )
+      </div>
+    </>
+  );
 }
 
 export default CardCreate;
