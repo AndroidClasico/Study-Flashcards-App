@@ -9,7 +9,12 @@ function CardCreate() {
   const history = useHistory();
 
   useEffect(() => {
-    readDeck(deckId).then(setDeck);
+    async function loadDeck(){
+    const res = await readDeck(deckId)
+    setDeck(res)
+    }
+    loadDeck()
+    // readDeck(deckId).then(setDeck);
   }, [deckId]);
 
   function submitHandler(card) {

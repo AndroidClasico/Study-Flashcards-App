@@ -1,46 +1,47 @@
-import React, { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
-function DeckForm({ onCancel, onSubmit, initialState, deckName, deckDescription }) {
-  const [deck, setdeck] = useState(initialState);
-
-  function changeHandler({ target: { name, value } }) {
-    setdeck((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }
-
-  function submitHandler(event) {
-    event.preventDefault();
-    onSubmit(deck);
-  }
+function DeckForm({
+  currName,
+  currDesc,
+  onCancel,
+  onSubmit,
+  onChange,
+}) {
+  const { deckId } = useParams();
+  // function submitHandler(event) {
+  //   event.preventDefault();
+  //   onSubmit(deck);
+  // }
 
   return (
     <>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={onSubmit}>
         <label htmlFor="name">Name</label>
         <input
           type="text"
           id="name"
           name="name"
-          onChange={changeHandler}
-          value={deck.name}
+          onChange={onChange}
+          value={currName}
           required
-          placeholder={deckName}
+          placeholder="Deck Name"
         />
         <label htmlFor="description">Description </label>
         <textarea
           id="description"
           name="description"
-          onChange={changeHandler}
-          value={deck.description}
+          onChange={onChange}
+          value={currDesc}
           required
-          placeholder={deckDescription}
+          placeholder="Brief description of the deck"
         />
-        <button type="button" onClick={onCancel}>
-          cancel
-        </button>
-        <button type="submit">Submit</button>
+          <Link to={`/decks/${deckId}`}>
+            <button className="btn btn-secondary mr-2">Cancel</button>
+          </Link>
+        
+        <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
       </form>
     </>
   );

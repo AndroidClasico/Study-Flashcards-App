@@ -1,68 +1,66 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
+import { updateDeck, readDeck } from "../utils/api";
 import DeckForm from "./DeckForm";
-import { readDeck, updateDeck } from "../utils/api";
 
 function DeckEdit() {
+  const initialState = { name: "", description: "" };
+  const [formData, setFormData] = useState(initialState);
   const [deck, setDeck] = useState({});
   const history = useHistory();
   const { deckId } = useParams();
-  const initialState = {
-    name: "",
-    description: deck.description,
-  };
 
   useEffect(() => {
-    readDeck(deckId).then(setDeck);
+    const abortController = new AbortController();
+    const loadDeck = async () => {
+      const loadedDeck = await readDeck(deckId, abortController.signal);
+      setDeck(() => loadedDeck);
+      setFormData({
+        id: deckId,
+        name: loadedDeck.name,
+        description: loadedDeck.description,
+      });
+    };
+    loadDeck();
+    return () => abortController.abort();
   }, [deckId]);
 
-  function submitHandler(deck) {
-    //READ THE DECK
-    //UPDATE / SAVE THE DECKS NEW STATE
+  const handleChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
 
-    //event.preventDefault ???
-    readDeck(deck).then((updateDeck) => {
-      console.log(deck)
-      return updateDeck(deck) && history.push(`/decks/${updateDeck.id}`);
-    });
-  }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const response = await updateDeck(formData);
+    history.push(`/decks/${response.id}`);
+  };
 
-  function cancel() {
-    history.push(`/decks/${deckId}`);
-  }
 
   return (
-    <>
+    <div>
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
-          <li className="breadcrumb-item">
-            <Link to="/">
-              <span className="oi oi-home" /> Home
-            </Link>
+          <li className="breadcrumb-item text-primary">
+            <Link to="/">Home</Link>
           </li>
-          <li className="breadcrumb-item active" aria-current="page">
-            <Link to={`/decks/${deckId}`}>
-              <span className="oi oi-study" /> {deck.name}
-            </Link>
+          <li className="breadcrumb-item text-primary">
+            <Link to={`/decks/${deckId}`}>{deck.name}</Link>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
             Edit Deck
           </li>
         </ol>
       </nav>
+      <h1>Edit Deck</h1>
+      <DeckForm
+        initialState={initialState}
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+        currName={formData.name}
+        currDesc={formData.description}
+      />
 
-      <div>
-        <h1>Edit Deck</h1>
-        <DeckForm
-          initialState={initialState}
-          deckName={deck.name}
-          deckDescription={deck.description}
-          onCancel={cancel}
-          onSubmit={submitHandler}
-        />
-      </div>
-    </>
+    </div>
   );
 }
 
