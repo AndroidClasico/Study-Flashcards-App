@@ -1,47 +1,60 @@
-import { Link, useParams } from "react-router-dom";
+import React, { useState } from "react";
 
-function DeckForm({
-  currName,
-  currDesc,
-  onCancel,
-  onSubmit,
-  onChange,
+function DeckForm({ 
+  onCancel, 
+  onSubmit, 
+  initialState = { name: "", description: "" },
 }) {
-  const { deckId } = useParams();
-  // function submitHandler(event) {
-  //   event.preventDefault();
-  //   onSubmit(deck);
-  // }
+  const [deck, setdeck] = useState(initialState);
+
+  function changeHandler({ target: { name, value } }) {
+    setdeck((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+
+  function submitHandler(event) {
+    event.preventDefault();
+    onSubmit(deck);
+  }
 
   return (
     <>
-      <form onSubmit={onSubmit}>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          onChange={onChange}
-          value={currName}
-          required
-          placeholder="Deck Name"
-        />
-        <label htmlFor="description">Description </label>
-        <textarea
-          id="description"
-          name="description"
-          onChange={onChange}
-          value={currDesc}
-          required
-          placeholder="Brief description of the deck"
-        />
-          <Link to={`/decks/${deckId}`}>
-            <button className="btn btn-secondary mr-2">Cancel</button>
-          </Link>
+      <form onSubmit={submitHandler} className="deck-edit">
+        <fieldset>
+        <div className="form-group">
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            className="form-control"
+            onChange={changeHandler}
+            value={deck.name}
+            required
+            placeholder="Deck Name"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="description">Description </label>
+          <textarea
+            id="description"
+            name="description"
+            className="form-control"
+            rows="4"
+            onChange={changeHandler}
+            value={deck.description}
+            required
+            placeholder="Deck Description"
+          />
+        </div>
         
-        <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
+        <button type="button" className="btn btn-secondary mr-2" onClick={onCancel}>
+          cancel
+        </button>
+        <button type="submit" className="btn btn-primary">Submit</button>
+        </fieldset>
       </form>
     </>
   );
