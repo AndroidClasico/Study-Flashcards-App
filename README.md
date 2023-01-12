@@ -1,4 +1,4 @@
-## Project Flash-card
+## Project Flashcards
 
 ### Alexandra Reynaldo
 
